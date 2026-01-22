@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jersey Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Jersey Registration</h2>
+    <form id="jerseyForm">
+      <label>Email:</label>
+      <input type="email" id="email" required>
+
+      <label>Name:</label>
+      <input type="text" id="name" required>
+
+      <label>Jersey Name:</label>
+      <input type="text" id="jerseyName" required>
+
+      <label>Size:</label>
+      <select id="size" required>
+        <option value="">Select Size</option>
+        <option value="S">Small</option>
+        <option value="M">Medium</option>
+        <option value="L">Large</option>
+        <option value="XL">Extra Large</option>
+      </select>
+
+      <label>Jersey Number (1-99):</label>
+      <input type="number" id="jerseyNumber" min="1" max="99" required>
+
+      <button type="submit">Register</button>
+    </form>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    const usedNumbers = new Set(); // store already taken jersey numbers
+    const form = document.getElementById('jerseyForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const jerseyName = document.getElementById('jerseyName').value.trim();
+      const size = document.getElementById('size').value;
+      const jerseyNumber = parseInt(document.getElementById('jerseyNumber').value);
+
+      // Validation
+      if (jerseyNumber < 1 || jerseyNumber > 99) {
+        message.textContent = "Jersey number must be between 1 and 99.";
+        message.className = "message error";
+        return;
+      }
+
+      if (usedNumbers.has(jerseyNumber)) {
+        message.textContent = "This jersey number is already taken!";
+        message.className = "message error";
+        return;
+      }
+
+      // Save jersey number
+      usedNumbers.add(jerseyNumber);
+
+      message.textContent = `✅ Registration successful for ${name} (Jersey #${jerseyNumber})`;
+      message.className = "message success";
+
+      // Reset form
+      form.reset();
+    });
+  </script>
+</body>
+</html>
