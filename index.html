@@ -67,22 +67,14 @@
     .error {
       color: red;
     }
-    table {
-      margin-top: 20px;
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
+    .admin-link {
       text-align: center;
+      margin-top: 15px;
     }
-    th {
-      background: #2c3e50;
-      color: #fff;
-    }
-    td {
-      background: #f9f9f9;
+    .admin-link a {
+      color: #2c3e50;
+      text-decoration: none;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -115,45 +107,16 @@
     </form>
     <div id="message" class="message"></div>
 
-    <h3>Registered Players</h3>
-    <table id="playersTable">
-      <thead>
-        <tr>
-          <th>Email</th>
-          <th>Name</th>
-          <th>Jersey Name</th>
-          <th>Size</th>
-          <th>Number</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="admin-link">
+      <p><a href="admin.html">Admin Login</a></p>
+    </div>
   </div>
 
   <script>
     const form = document.getElementById('jerseyForm');
     const message = document.getElementById('message');
-    const playersTable = document.getElementById('playersTable').querySelector('tbody');
 
-    // Load saved data from localStorage
     let registrations = JSON.parse(localStorage.getItem("registrations")) || [];
-
-    // Render table
-    function renderTable() {
-      playersTable.innerHTML = "";
-      registrations.forEach(r => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${r.email}</td>
-          <td>${r.name}</td>
-          <td>${r.jerseyName}</td>
-          <td>${r.size}</td>
-          <td>${r.jerseyNumber}</td>
-        `;
-        playersTable.appendChild(row);
-      });
-    }
-    renderTable();
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -186,7 +149,6 @@
       message.className = "message success";
 
       form.reset();
-      renderTable();
     });
   </script>
 </body>
